@@ -8,7 +8,7 @@ if(!connectionString){
     return process.exit(1);
 }
 
-const queries = buildQueries(__dirname, 'createTables');
+const queries = buildQueries(__dirname, 'createTables', 'populate');
 
 async function main(){
     console.log('DB initialization started');
