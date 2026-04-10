@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('node:path');
 const indexRouter = require('./routes/indexRouter.cjs');
 const passport = require('passport');
+const loginRouter = require('./routes/loginRouter.cjs');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 // ==================== ROUTING ====================
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use((req, res, next) => {
     const error = new Error('Path not found');
     error.status = 404;

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../meta/head') %>
+    <body>
+        <%- include('../layout/header') %>
+        <main>
+            <%- include('../elements/errorBox') %>
+            <form action="/login" method="POST">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required />
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required/>
+                <label for="confirm-password"> Confirm Password</label>
+                <input type="password" name="confirm-password" id="confirm-password" required/>
+                <button type="submit">Login</button>
+                <p>Not a member? - <a href="/signup">Sign up</a></p>
+            </form>
+        </main>
+        <%- include('../layout/footer') %>
+    </body>
+</html>

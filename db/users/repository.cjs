@@ -1,7 +1,7 @@
 const buildQueries = require('../../lib/db/buildQueries.cjs');
 const pool = require('../pool.cjs');
 
-const queries = buildQueries(__dirname, 'getUserById', 'getUserByUsername');
+const queries = buildQueries(__dirname, 'getUserById', 'getUserByUsername', 'createUser');
 
 async function getUserById(id){
     const {rows} = await pool.query(queries.getUserById, [id]);
