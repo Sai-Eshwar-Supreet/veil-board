@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS posts(
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ
 );
-CREATE INDEX idx_posts_user_id ON posts(user_id); 
-CREATE INDEX idx_posts_created_at_desc ON posts (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id); 
+CREATE INDEX IF NOT EXISTS idx_posts_created_at_desc ON posts (created_at DESC);
 
 
 -- ROLES
