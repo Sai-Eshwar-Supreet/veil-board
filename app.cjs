@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('node:path');
 const indexRouter = require('./routes/indexRouter.cjs');
+const passport = require('passport');
 
 const app = express();
 
@@ -8,8 +9,18 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+require('./configs/passport.cjs');
+app.use(require('./configs/session.cjs'));
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
+
+app.use((req, res, next) => {
+    console.log(req.session);
+    console.log(req.user);
+    console.log(req.body);
+    next();
+});
 
 // ==================== ROUTING ====================
 app.use('/', indexRouter);
