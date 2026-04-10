@@ -8,7 +8,8 @@ const session = expressSession({
     saveUninitialized: false,
     store: new SessionStore({
         pool,
-        tableName: 'user_sessions'
+        tableName: 'user_sessions',
+        createTableIfMissing: true
     })
 });
 

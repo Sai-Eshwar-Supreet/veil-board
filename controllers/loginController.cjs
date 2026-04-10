@@ -1,10 +1,11 @@
 const { body, validationResult, matchedData } = require('express-validator');
 const passport = require('passport');
+const { passOnNotAuth } = require('../lib/middlewares/authentication.cjs');
 
 const validator = [
     body('username').trim().toLowerCase()
     .notEmpty().withMessage('Username must not be empty.').bail()
-    .matches(/^[a-z]+(\.[a-z0-9]+)*$/).withMessage('Use only letters, numbers, and dots. Dots cannot be at the start, end, or used consecutively.').bail()
+    .matches(/^[a-z]+([\._][a-z0-9]+)*$/).withMessage('Username can contain letters, numbers, dots, and underscores. No leading, trailing, or consecutive dots/underscores.').bail()
     .isLength({min: 5, max: 25}).withMessage('Username must be between 5 to 25 characters.'),
 
     body('password').trim()
@@ -14,9 +15,6 @@ const validator = [
 ]
 
 async function getLogin(req, res){
-    if(req.isAuthenticated()){
-        return res.redirect('/');
-    }
     res.render('pages/login', {title: 'Login'});
 }
 
@@ -36,10 +34,6 @@ function validateCredentials(req, res, next){
 }
 
 async function postLogin(req, res, next){
-    if(req.isAuthenticated()){
-        return res.redirect('/');
-    }
-    
     passport.authenticate('local', (err, user, info) => {
 
         if(err) return next(err);
@@ -56,5 +50,5 @@ async function postLogin(req, res, next){
     })(req, res, next);
 }
 
-module.exports.getLogin = getLogin;
-module.exports.postLogin = [validator, validateCredentials, postLogin];
+module.exports.getLogin = [passOnNotAuth, getLogin];
+module.exports.postLogin = [passOnNotAuth, validator, validateCredentials, postLogin];

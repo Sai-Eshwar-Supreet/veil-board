@@ -12,5 +12,10 @@ async function getUserByUsername(username){
     return rows[0];
 }
 
+async function createUser(username, passwordHash) {
+    await pool.query(queries.createUser, [username, passwordHash]);
+}
+
 module.exports.getUserById = getUserById;
 module.exports.getUserByUsername = getUserByUsername;
+module.exports.createUser = createUser;
