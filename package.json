@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --env-file-if-exists=.env app.cjs",
     "dev": "node --watch --env-file-if-exists=.env app.cjs",
-    "debug": "node --watch --inspect --env-file-if-exists=.env app.cjs"
+    "debug": "node --watch --inspect --env-file-if-exists=.env app.cjs",
+    "db:init": "node ./db/initialize/initializer.cjs"
   },
   "repository": {
     "type": "git",
