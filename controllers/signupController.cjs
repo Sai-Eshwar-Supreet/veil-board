@@ -1,7 +1,7 @@
 const { validationResult, matchedData, body } = require('express-validator');
 const usersDB = require('../db/users/repository.cjs');
 const bcrypt = require('bcrypt');
-const { passOnNotAuth } = require('../lib/middlewares/authentication.cjs');
+const { isGuest } = require('../lib/middlewares/authentication.cjs');
 
 const validator = [
     body('username').trim().toLowerCase()
@@ -57,5 +57,5 @@ async function postSignup(req, res, next){
     }
 }
 
-module.exports.getSignup = [passOnNotAuth, getSignup];
-module.exports.postSignup = [passOnNotAuth, validator, postSignup];
+module.exports.getSignup = [isGuest, getSignup];
+module.exports.postSignup = [isGuest, validator, postSignup];

@@ -1,6 +1,6 @@
 SELECT 
     p.id  AS "postId",
-    u.username AS username,
+    u.username AS author,
     p.title AS title,
     p.content AS content,
     p.created_at AS "createdAt",

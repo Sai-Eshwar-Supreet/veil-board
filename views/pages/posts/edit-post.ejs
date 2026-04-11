@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../meta/head', {title: post.title}) %>
+    <body>
+        <%- include('../../layout/header') %>
+        <main>
+            <%- include('../../elements/errorBox') %>
+            <form action=<%= `/posts/${post.postId}/edit` %> method="POST">
+                
+                <%- include('../../elements/inputs/text-input', 
+                    {
+                        name: 'title', 
+                        label: 'Title', 
+                        value: post.title,
+                        required: true
+                    }
+                )%>
+
+                <%- include('../../elements/inputs/textarea-input', 
+                    {
+                        name: 'content', 
+                        label: 'Content', 
+                        value: post.content, 
+                        required: true
+                    }
+                )%>
+                
+                <%- include('../../elements/inputs/submit-button', 
+                    {
+                        label: 'Update'
+                    }
+                )%>
+            </form>
+        </main>
+        <%- include('../../layout/footer') %>
+    </body>
+</html>

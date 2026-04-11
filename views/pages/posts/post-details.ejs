@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../meta/head', {title: post.title}) %>
+    <body>
+        <%- include('../../layout/header') %>
+        <main>
+            <h3><%= post.title %></h3>
+            <p><%= post.author %></p>
+            <p><%= post.createdAt.toDateString() %></p>
+            <p><%= post.updatedAt.toDateString() %></p>
+            <p><%= post.content %></p>
+            <% if(canEditPost){ %>
+                <a href=<%= `/posts/${post.postId}/edit` %> >Edit</a>
+            <% } %>
+            <% if(canDeletePost){ %>
+                <form action=<%= `/posts/${post.postId}/delete` %> method="POST">
+                    <button type="submit" >Delete</button>
+                </form> 
+            <% } %>
+        </main>
+        <%- include('../../layout/footer') %>
+    </body>
+</html>

@@ -8,4 +8,4 @@ SELECT
     u.id,
     r.id
 FROM new_user AS u
-JOIN roles AS r ON r.name = 'member';
+JOIN roles AS r ON r.name = 'user';

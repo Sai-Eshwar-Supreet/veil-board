@@ -4,10 +4,9 @@
     <body>
         <%- include('../layout/header') %>
         <main>
-            <% if(canCreatePost){ %>
-                <a href=<%=`/posts/create` %>>New</a>
-            <% } %>
-            <%- include('../sections/posts') %>
+            <form action="/membership/join" method="POST">
+                <%- include('../elements/inputs/submit-button', {label: 'Become a member'}) %>
+            </form>
         </main>
         <%- include('../layout/footer') %>
     </body>

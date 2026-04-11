@@ -4,6 +4,8 @@ const indexRouter = require('./routes/indexRouter.cjs');
 const passport = require('passport');
 const loginRouter = require('./routes/loginRouter.cjs');
 const signupRouter = require('./routes/signupRouter.cjs');
+const postsRouter = require('./routes/postsRouter.cjs');
+const membershipRouter = require('./routes/membershipRouter.cjs');
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(express.urlencoded({extended: true}));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+app.use('/posts', postsRouter);
+app.use('/membership', membershipRouter);
 app.use((req, res, next) => {
     const error = new Error('Path not found');
     error.status = 404;

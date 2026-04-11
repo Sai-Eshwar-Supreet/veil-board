@@ -7,7 +7,7 @@
                     <h3><%= post.title %></h3>
                     <p> 
                         <%= 
-                            user?.username === post.username
+                            locals.user
                             ? post.username 
                             : 'Anonymous' 
                         %>
@@ -15,7 +15,7 @@
                     <p>
                         <%= 
                             post.content?.length > (locals.previewLength || 50)
-                            ? `${post.content.slice(50)}...`
+                            ? `${post.content.slice(0, 50)}...`
                             : post.content
                         %>
                     </p>

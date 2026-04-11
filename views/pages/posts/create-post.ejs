@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../meta/head', {title: "New Post"}) %>
+    <body>
+        <%- include('../../layout/header') %>
+        <main>
+            <%- include('../../elements/errorBox') %>
+            <form action="/posts/create" method="POST">
+                
+                <%- include('../../elements/inputs/text-input', 
+                    {
+                        name: 'title', 
+                        label: 'Title', 
+                        required: true
+                    }
+                )%>
+
+                <%- include('../../elements/inputs/textarea-input', 
+                    {
+                        name: 'content', 
+                        label: 'Content', 
+                        required: true
+                    }
+                )%>
+                
+                <%- include('../../elements/inputs/submit-button', 
+                    {
+                        label: 'Create'
+                    }
+                )%>
+            </form>
+        </main>
+        <%- include('../../layout/footer') %>
+    </body>
+</html>
