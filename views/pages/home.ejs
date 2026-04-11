@@ -3,7 +3,8 @@
     <%- include('../meta/head') %>
     <body>
         <%- include('../layout/header') %>
-        <main>
+        <main class="content">
+            <%- include(`../sections/${locals.user?  'hero-section-logged-in' : 'hero-section-logged-out'}`) %>
             <%- include('../sections/posts') %>
         </main>
         <%- include('../layout/footer') %>

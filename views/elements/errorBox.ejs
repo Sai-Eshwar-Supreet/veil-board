@@ -1,8 +1,8 @@
 <%
     if(locals.errors){%>
-        <ul>
+        <ul class="error-box">
             <% errors.forEach(error => {%>
-                <li><%= error %></li>
+                <li class="error-item"><%= error %></li>
             <%})%>
         </ul>
     <%}

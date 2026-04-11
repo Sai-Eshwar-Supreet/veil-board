@@ -3,7 +3,7 @@
     <%- include('../../meta/head', {title: post.title}) %>
     <body>
         <%- include('../../layout/header') %>
-        <main>
+        <main class="content">
             <%- include('../../elements/errorBox') %>
             <form action=<%= `/posts/${post.id}/edit` %> method="POST">
                 

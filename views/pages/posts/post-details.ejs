@@ -3,7 +3,7 @@
     <%- include('../../meta/head', {title: post.title}) %>
     <body>
         <%- include('../../layout/header') %>
-        <main>
+        <main class="content">
             <h3><%= post.title %></h3>
             <p><%= post.author %></p>
             <p><%= post.createdAt.toDateString() %></p>

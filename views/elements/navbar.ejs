@@ -1,24 +1,24 @@
-<nav>
-    <ul>
-        <li>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li class="nav-item">
             <a href="/">Posts</a>
         </li>
         <%
             if(locals.user){ %>
-                <li>
+                <li class="nav-item">
                     <form action="/logout" method="POST">
                         <button type="submit">Logout</button>
                     </form>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href="<%= `/profiles/${user.username}` %>">Profile</a>
                 </li>
             <%}
             else{%>
-                    <li>
+                    <li class="nav-item">
                         <a href="/login">Login</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a href="/signup">Sign up</a>
                     </li>
             <%}

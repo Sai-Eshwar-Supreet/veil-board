@@ -16,7 +16,7 @@ async function getProfile(req,res, next){
     const ownProfile = (req.user.id === profileUser.id);
     const canCreatePost = ownProfile &&  permissions.canCreatePost(req.user);
     const canBecomeMember = ownProfile && permissions.canBecomeMember(req.user);
-    res.render('pages/profile', {title: 'Profile', posts, user: profileUser, previewLength: 50, canCreatePost, canBecomeMember});
+    res.render('pages/profile', {title: 'Profile', posts, user: req.user, profileUser, previewLength: 50, canCreatePost, canBecomeMember});
 } 
 
 module.exports.getProfile = [isAuthenticated, getProfile];
