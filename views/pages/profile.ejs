@@ -4,13 +4,30 @@
     <body>
         <%- include('../layout/header') %>
         <main class="content">
-            <h2><%= profileUser.username %></h2>
-            <% if(canCreatePost){ %>
-                <a href=<%=`/posts/create` %>>New</a>
-            <% } %>
-            <% if(canBecomeMember){ %>
-                <a href=<%=`/membership/join` %>>Become a member</a>
-            <% } %>
+            <div class="profile-section">
+                <div class="profile-header">
+                    <img class="profile-image" src="/assets/profile-placeholder.png" alt=`${profileUser.username}'s profile picture` >
+                    <div class="profile-header-content">
+                        <p class="profile-name">@<%= profileUser.username %></p>
+                        <div class="profile-roles">
+                            <% profileUser.roles.forEach( role => { %>
+                                <span class="profile-role-badge"><%= role %></span>
+                            <%})%>
+                        </div>
+                    </div>
+                </div>
+                <section class="profile-actions-section">
+                    <%- include('../elements/headings/section-heading', { heading: 'Profile Actions' }) %>
+                    <div class="profile-actions">
+                        <% if(canCreatePost){ %>
+                            <a href=<%=`/posts/create` %>>New</a>
+                        <% } %>
+                        <% if(canBecomeMember){ %>
+                            <a href=<%=`/membership/join` %>>Become a member</a>
+                        <% } %>
+                    </div>
+                </section>
+            </div>
             <%- include('../sections/posts') %>
         </main>
         <%- include('../layout/footer') %>

@@ -303,3 +303,88 @@ body{
 .post-link:hover{
     color: var(--accent-soft);
 }
+
+/* ====================== PROFILE ====================== */
+.profile-section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-6) 0;
+}
+
+.profile-header{
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.profile-header-content{
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.profile-image{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-image: url('../assets/profile-placeholder.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-name{
+    font-size: var(--fs-base);
+    font-weight: var(--fw-bold);
+}
+
+.profile-roles{
+    display: flex;
+    gap: var(--space-1);
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+}
+
+.profile-role-badge{
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-secondary);
+}
+
+.profile-actions-section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--space-4);
+    box-shadow: var(--shadow-light);
+    border-radius: var(--radius-sm);
+    margin: var(--space-2) 0;
+    
+    gap: var(--space-4);
+}
+
+.profile-actions-section .section-heading{
+    margin-top: var(--space-2);
+    margin-right: var(--space-4);
+}
+
+.profile-actions{
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--space-2);
+}
+
+.profile-actions a, .profile-actions form button{
+    text-decoration: none;
+    padding: var(--space-1) var(--space-2);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.3s ease;
+    border: 1px solid var(--grey-200);
+    background: none;
+}
+.profile-actions a:hover, .profile-actions form button:hover{
+    background-color: var(--bg-muted);
+}
