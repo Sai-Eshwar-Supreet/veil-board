@@ -33,7 +33,7 @@ const validator = [
 ];
 
 function getSignup(req,res){
-    res.render('pages/signup', {title: 'Sign Up'});
+    res.render('pages/signup', {user: req.user, title: 'Sign Up'});
 }
 
 async function postSignup(req, res, next){
@@ -41,7 +41,7 @@ async function postSignup(req, res, next){
         const errors = validationResult(req);
     
         if(!errors.isEmpty()){
-            return res.status(400).render('pages/signup', {title: 'Sign Up', errors: errors.array().map(err => err.msg)});
+            return res.status(400).render('pages/signup', {user: req.user, title: 'Sign Up', errors: errors.array().map(err => err.msg)});
         }
     
         const {username, password} = matchedData(req);

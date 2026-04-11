@@ -15,14 +15,14 @@ const validator = [
 ]
 
 async function getLogin(req, res){
-    res.render('pages/login', {title: 'Login'});
+    res.render('pages/login', {user: req.user, title: 'Login'});
 }
 
 function validateCredentials(req, res, next){
     const validationErrors = validationResult(req);
 
     if(!validationErrors.isEmpty()){
-        return res.status(400).render('pages/login', {title: 'Login', errors: validationErrors.array().map(err => err.msg)});
+        return res.status(400).render('pages/login', {user: req.user, title: 'Login', errors: validationErrors.array().map(err => err.msg)});
     }
 
     const {username, password} = matchedData(req);
@@ -39,7 +39,7 @@ async function postLogin(req, res, next){
         if(err) return next(err);
 
         if(!user){
-            return res.status(401).render('pages/login', {title: 'Login', errors: [info.message]});
+            return res.status(401).render('pages/login', {user: req.user, title: 'Login', errors: [info.message]});
         }
 
         req.login(user, err => {

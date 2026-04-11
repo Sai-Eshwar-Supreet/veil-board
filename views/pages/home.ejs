@@ -4,9 +4,6 @@
     <body>
         <%- include('../layout/header') %>
         <main>
-            <% if(canCreatePost){ %>
-                <a href=<%=`/posts/create` %>>New</a>
-            <% } %>
             <%- include('../sections/posts') %>
         </main>
         <%- include('../layout/footer') %>

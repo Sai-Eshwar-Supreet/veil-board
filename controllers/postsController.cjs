@@ -59,7 +59,7 @@ async function getPost(req, res, next){
         const canEditPost = permissions.canUpdatePost(req.user, post.author);
         const canDeletePost = permissions.canDeletePost(req.user, post.author);
 
-        res.render('pages/posts/post-details', {post, canEditPost, canDeletePost});
+        res.render('pages/posts/post-details', {user: req.user, post, canEditPost, canDeletePost});
     }
     catch(err){
         next(err);
@@ -67,7 +67,7 @@ async function getPost(req, res, next){
 }
 
 function getCreateForm(req, res, next){
-    res.render('pages/posts/create-post');
+    res.render('pages/posts/create-post', {user: req.user});
 }
 
 async function postCreateForm(req, res, next){
@@ -76,7 +76,7 @@ async function postCreateForm(req, res, next){
 
         if(!errors.isEmpty()){
             return res.status(400)
-            .render('pages/posts/create-post', {errors: errors.array().map(err => err.msg)});
+            .render('pages/posts/create-post', {user: req.user, errors: errors.array().map(err => err.msg)});
         }
 
         const {title, content} = matchedData(req);
@@ -90,7 +90,7 @@ async function postCreateForm(req, res, next){
 }
 
 async function getEditForm(req, res){
-    res.render('pages/posts/edit-post', {post: req.currentPost});
+    res.render('pages/posts/edit-post', {user:req.user, post: req.currentPost});
 }
 
 async function postEditForm(req, res, next){
@@ -99,14 +99,14 @@ async function postEditForm(req, res, next){
 
         if(!errors.isEmpty()){
             return res.status(400)
-            .render('pages/posts/edit-post', {post: post.currentPost, errors: errors.array().map(err => err.msg)});
+            .render('pages/posts/edit-post', {user:req.user, post: post.currentPost, errors: errors.array().map(err => err.msg)});
         }
 
         const {title, content} = matchedData(req, {locations: ['body']});
 
-        await postDB.updatePost(req.currentPost.postId, title, content, new Date());
+        await postDB.updatePost(req.currentPost.id, title, content, new Date());
         
-        return res.redirect(`/posts/${req.currentPost.postId}/details`);
+        return res.redirect(`/posts/${req.currentPost.id}/details`);
     }
     catch(err){
         return next(err);
@@ -114,7 +114,8 @@ async function postEditForm(req, res, next){
 }
 
 async function postDelete(req, res, next){
-    await postDB.deletePost(req.currentPost.postId);
+    await postDB.deletePost(req.currentPost.id);
+    req.currentPost = undefined;
     res.redirect('/');
 }
 

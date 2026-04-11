@@ -6,6 +6,8 @@ const loginRouter = require('./routes/loginRouter.cjs');
 const signupRouter = require('./routes/signupRouter.cjs');
 const postsRouter = require('./routes/postsRouter.cjs');
 const membershipRouter = require('./routes/membershipRouter.cjs');
+const logoutRouter = require('./routes/logoutRouter.cjs');
+const profileRouter = require('./routes/profileRouter.cjs');
 
 const app = express();
 
@@ -21,7 +23,9 @@ app.use(express.urlencoded({extended: true}));
 
 // ==================== ROUTING ====================
 app.use('/', indexRouter);
+app.use('/profiles', profileRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/signup', signupRouter);
 app.use('/posts', postsRouter);
 app.use('/membership', membershipRouter);

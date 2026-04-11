@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../meta/head') %>
+    <body>
+        <%- include('../layout/header') %>
+        <main>
+            <h2><%= user.username %></h2>
+            <% if(canCreatePost){ %>
+                <a href=<%=`/posts/create` %>>New</a>
+            <% } %>
+            <% if(canBecomeMember){ %>
+                <a href=<%=`/membership/join` %>>Become a member</a>
+            <% } %>
+            <%- include('../sections/posts') %>
+        </main>
+        <%- include('../layout/footer') %>
+    </body>
+</html>

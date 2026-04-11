@@ -5,7 +5,7 @@
         <%- include('../../layout/header') %>
         <main>
             <%- include('../../elements/errorBox') %>
-            <form action=<%= `/posts/${post.postId}/edit` %> method="POST">
+            <form action=<%= `/posts/${post.id}/edit` %> method="POST">
                 
                 <%- include('../../elements/inputs/text-input', 
                     {

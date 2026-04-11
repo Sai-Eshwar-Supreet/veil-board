@@ -3,7 +3,7 @@ const { authorizeJoinMembership } = require("../lib/middlewares/authorization.cj
 const userDB = require('../db/users/repository.cjs');
 
 function getMembershipPage(req, res, next){
-    res.render('pages/membership');
+    res.render('pages/membership', {user: req.user});
 }
 
 

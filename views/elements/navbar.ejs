@@ -6,7 +6,12 @@
         <%
             if(locals.user){ %>
                 <li>
-                    <a href="<%= `/${user.username}` %>">Profile</a>
+                    <form action="/logout" method="POST">
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+                <li>
+                    <a href="<%= `/profiles/${user.username}` %>">Profile</a>
                 </li>
             <%}
             else{%>

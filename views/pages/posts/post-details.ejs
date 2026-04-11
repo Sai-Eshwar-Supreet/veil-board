@@ -10,10 +10,10 @@
             <p><%= post.updatedAt.toDateString() %></p>
             <p><%= post.content %></p>
             <% if(canEditPost){ %>
-                <a href=<%= `/posts/${post.postId}/edit` %> >Edit</a>
+                <a href=<%= `/posts/${post.id}/edit` %> >Edit</a>
             <% } %>
             <% if(canDeletePost){ %>
-                <form action=<%= `/posts/${post.postId}/delete` %> method="POST">
+                <form action=<%= `/posts/${post.id}/delete` %> method="POST">
                     <button type="submit" >Delete</button>
                 </form> 
             <% } %>

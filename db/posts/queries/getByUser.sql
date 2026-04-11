@@ -1,5 +1,5 @@
 SELECT 
-    p.id  AS "postId",
+    p.id  AS id,
     u.username AS author,
     p.title AS title,
     p.content AS content,
