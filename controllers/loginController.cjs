@@ -3,43 +3,46 @@ const passport = require('passport');
 const { isGuest } = require('../lib/middlewares/authentication.cjs');
 
 const validator = [
-    body('username').trim().toLowerCase()
-    .notEmpty().withMessage('Username must not be empty.').bail()
-    .matches(/^[a-z]+([\._][a-z0-9]+)*$/).withMessage('Username can contain letters, numbers, dots, and underscores. No leading, trailing, or consecutive dots/underscores.').bail()
-    .isLength({min: 5, max: 25}).withMessage('Username must be between 5 to 25 characters.'),
+    body('username').trim()
+    .notEmpty().withMessage('Username is required.'),
 
     body('password').trim()
-    .notEmpty().withMessage('Password must not be empty').bail()
-    .matches(/^(?=.*[A-Z])(?=.*[\d])(?=.*[\W_])[a-zA-Z\d\W\s_]+$/).withMessage('Password must contain at least 1 uppercase letter, 1 number, and 1 special character').bail()
-    .isLength({min: 8}).withMessage('Password should be at least 8 characters long'),
-]
+    .notEmpty().withMessage('Password is required')
+];
 
-async function getLogin(req, res){
-    res.render('pages/login', {user: req.user, title: 'Login'});
+function renderLogin(res, data = {}) {
+  return res.render('pages/login', { ...data});
 }
 
 function validateCredentials(req, res, next){
-    const validationErrors = validationResult(req);
+    const errors = validationResult(req);
 
-    if(!validationErrors.isEmpty()){
-        return res.status(400).render('pages/login', {user: req.user, title: 'Login', errors: validationErrors.array().map(err => err.msg)});
+    if(!errors.isEmpty()){
+        return renderLogin(res, {
+            errors: errors.array().map(e => e.msg),
+            username: req.body.username
+        });
     }
 
-    const {username, password} = matchedData(req);
-
-    req.body.username = username;
-    req.body.password = password;
-
+    req.cleanedData = matchedData(req);
     next();
 }
 
+async function getLogin(req, res){
+    return renderLogin(res);
+}
+
+
 async function postLogin(req, res, next){
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate('local', (err, user) => {
 
         if(err) return next(err);
 
         if(!user){
-            return res.status(401).render('pages/login', {user: req.user, title: 'Login', errors: [info.message]});
+            return renderLogin(res, {
+                errors: ['Invalid username or password'],
+                username: req.body.username,
+            });
         }
 
         req.login(user, err => {

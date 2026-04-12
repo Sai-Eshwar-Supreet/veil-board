@@ -1,5 +1,5 @@
 <%
-  const { errors = [] } = locals;
+  const { errors = [], username } = locals;
 %>
 
 <section class="auth">
@@ -22,6 +22,7 @@
                 {
                     name: 'username',
                     label: 'Username',
+                    value: username,
                     required: true
                 }
             )%>
