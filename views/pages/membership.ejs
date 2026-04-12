@@ -12,19 +12,30 @@
         }
     )%>
 
-    <!-- Description -->
-    <p class="membership__description">
-        Become a member to unlock full access to posts and additional features.
-    </p>
+    <div class="membership__content">
+        <% if (user?.roles?.includes('member')) { %>
+            <p class="membership__description">
+                You are already a member
+            </p>
+            <a href="/" class="btn btn--secondary">Go to posts</a>
+        <% }
+        else {%>
+            <!-- Description -->
+            <p class="membership__description">
+                Become a member to unlock full access to posts and additional features.
+            </p>
+        
+            <!-- Action -->
+            <form class="membership__form" action="/membership/join" method="POST">
+                <%- include('../elements/button',
+                    {
+                        type: 'submit',
+                        variant: 'primary',
+                        label: 'Join for free'
+                    }
+                )%>
+            </form>
+        <%}%>
+    </div>
 
-    <!-- Action -->
-    <form class="membership__form" action="/membership/join" method="POST">
-        <%- include('../elements/button', 
-            {
-                type: 'submit',
-                variant: 'primary',
-                label: 'Join for free'
-            }
-        )%>
-    </form>
 </section>

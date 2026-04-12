@@ -3,7 +3,7 @@ const { authorizeJoinMembership } = require("../lib/middlewares/authorization.cj
 const userDB = require('../db/users/repository.cjs');
 
 function getMembershipPage(req, res, next){
-    res.render('pages/membership', {user: req.user});
+    res.render('pages/membership');
 }
 
 
@@ -20,5 +20,5 @@ async function postJoinMembership(req, res, next){
     }
 }
 
-module.exports.getMembershipPage = [isAuthenticated, authorizeJoinMembership, getMembershipPage]
+module.exports.getMembershipPage = [isAuthenticated, getMembershipPage]
 module.exports.postJoinMembership = [isAuthenticated, authorizeJoinMembership, postJoinMembership]
