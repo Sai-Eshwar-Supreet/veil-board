@@ -7,16 +7,7 @@ const validator = [
     body('username').trim().toLowerCase()
     .notEmpty().withMessage('Username must not be empty.').bail()
     .matches(/^[a-z]+([\._][a-z0-9]+)*$/).withMessage('Username can contain letters, numbers, dots, and underscores. No leading, trailing, or consecutive dots/underscores.').bail()
-    .isLength({min: 5, max: 25}).withMessage('Username must be between 5 to 25 characters.').bail()
-    .custom(async (value) => {
-        const user = await usersDB.getUserByUsername(value);
-
-        if(user){
-            throw new Error('Username already exists');
-        }
-
-        return true;
-    }),
+    .isLength({min: 5, max: 25}).withMessage('Username must be between 5 to 25 characters.'),
 
     body('password').trim()
     .notEmpty().withMessage('Password must not be empty').bail()
@@ -32,8 +23,12 @@ const validator = [
     }),
 ];
 
+function renderSignup(res, data= {}){
+    return res.render('pages/signup', {...data});
+}
+
 function getSignup(req,res){
-    res.render('pages/signup', {user: req.user, title: 'Sign Up'});
+    return renderSignup(res);
 }
 
 async function postSignup(req, res, next){
@@ -41,14 +36,31 @@ async function postSignup(req, res, next){
         const errors = validationResult(req);
     
         if(!errors.isEmpty()){
-            return res.status(400).render('pages/signup', {user: req.user, title: 'Sign Up', errors: errors.array().map(err => err.msg)});
+            return renderSignup(res, {
+                errors: errors.array().map(e => e.msg),
+                username: req.body.username,
+            })
         }
     
         const {username, password} = matchedData(req);
-    
-        const passwordHash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
-    
-        await usersDB.createUser(username, passwordHash);
+        
+        const saltRounds = parseInt(process.env.SALT_ROUNDS, 10) || 10;
+        const passwordHash = await bcrypt.hash(password, saltRounds);
+        
+        try{
+            await usersDB.createUser(username, passwordHash);
+        }
+        catch(err){
+            if(err.code === '23505') // postgresql error code for violating UNIQUE constraint 
+            {
+                return renderSignup(res, {
+                    errors: ['Username already exists'],
+                    username,
+                });
+            }
+
+            throw err;
+        }
 
         res.redirect('/login');
     }

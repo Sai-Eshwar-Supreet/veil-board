@@ -3,7 +3,7 @@ const passport = require('passport');
 const { isGuest } = require('../lib/middlewares/authentication.cjs');
 
 const validator = [
-    body('username').trim()
+    body('username').trim().toLowerCase()
     .notEmpty().withMessage('Username is required.'),
 
     body('password').trim()
@@ -24,7 +24,10 @@ function validateCredentials(req, res, next){
         });
     }
 
-    req.cleanedData = matchedData(req);
+    const {username, password} = matchedData(req);
+
+    req.body.username = username;
+    req.body.password = password;
     next();
 }
 
