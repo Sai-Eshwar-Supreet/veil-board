@@ -1,7 +1,5 @@
 <%
   const { posts = [], user, previewLength = 50 } = locals;
-
-  const displayDate = post.updatedAtRelative || post.createdAtRelative;
 %>
 
 <section class="posts">
@@ -54,6 +52,7 @@
                         </span>
 
                         <span class="post__date">
+                            <% const displayDate = post.updatedAtRelative || post.createdAtRelative; %>
                             <%= user ? displayDate : '---' %>
                         </span>
                     </div>
