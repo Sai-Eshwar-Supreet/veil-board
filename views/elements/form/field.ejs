@@ -1,0 +1,13 @@
+<%
+  const { label, name, id = name, field } = locals;
+%>
+
+<div class="form-field">
+  <% if (label) { %>
+    <label for="<%= id %>" class="form-label">
+      <%= label %>
+    </label>
+  <% } %>
+
+  <%- field %>
+</div>

@@ -1,0 +1,7 @@
+<%
+  const { variant = 'primary', type = 'button', label = 'Submit', className = '' } = locals;
+%>
+
+<button class="btn btn--<%= variant %> <%= className %>" type="<%= type %>" >
+  <%= label %>
+</button>

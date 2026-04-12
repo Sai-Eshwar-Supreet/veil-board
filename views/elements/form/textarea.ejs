@@ -1,0 +1,16 @@
+<%
+  const { name, id = name, value = '', required } = locals;
+%>
+
+<%- include('elements/form/field', {
+  ...locals,
+  id,
+  field: `
+    <textarea
+      class="textarea"
+      id="${id}"
+      name="${name}"
+      ${required ? 'required' : ''}
+    >${value}</textarea>
+  `
+}) %>
