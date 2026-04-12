@@ -1,11 +1,19 @@
-const { isAuthenticated } = require("../lib/middlewares/authentication.cjs");
+function postLogout(req, res, next){
+    if(!req.isAuthenticated()){
+        return res.redirect('/');
+    }
 
-async function postLogout(req, res, next){
     req.logout(err => {
         if(err) return next(err);
-        res.redirect('/');
+
+        req.session.destroy(err => {
+            if(err) return next(err);
+
+            res.clearCookie('connect.sid');
+            res.redirect('/');
+        });
     });
 
 }
 
-module.exports.postLogout = [isAuthenticated, postLogout];
+module.exports.postLogout = postLogout;
