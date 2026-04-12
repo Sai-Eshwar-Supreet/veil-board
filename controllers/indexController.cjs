@@ -1,12 +1,18 @@
 const postsDB = require('../db/posts/repository.cjs');
-const { getRelativeDate } = require('../lib/utils/dateUtils.cjs');
+const { formatPosts } = require('../posts/postFormatter.cjs');
 
-async function getHome(req, res){
-    const posts = await postsDB.getAll();
-    posts.forEach(post => {
-        post.relativeDate = getRelativeDate(post.updatedAt || post.createdAt);
-    });
-    res.render('pages/home', {title: 'Home', posts, user: req.user, previewLength: 50});
+async function getHome(req, res, next){
+    try{
+        const posts = await postsDB.getAll();
+        const formattedPosts = formatPosts(posts);
+        res.render('pages/home', 
+            {
+                posts: formattedPosts,
+            });
+    }
+    catch(err){
+        next(err);
+    }
 }
 
 module.exports.getHome = getHome;

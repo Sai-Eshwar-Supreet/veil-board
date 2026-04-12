@@ -46,14 +46,15 @@
                         %>
                     </p>
 
-                    <% if (user) { %>
-                        <div class="post__meta">
-                            <span class="post__author"><%= post.author %></span>
-                            <span class="post__date">
-                                <%= post.relativeDate %>
-                            </span>
-                        </div>
-                    <% } %>
+                    <div class="post__meta <%= !user ? 'post__meta--restricted' : '' %>">
+                        <span class="post__author">
+                            <%= user ? post.author : 'Anonymous' %>
+                        </span>
+
+                        <span class="post__date">
+                            <%= user ? post.relativeDate : '---' %>
+                        </span>
+                    </div>
                 </li>
             <% }) %>
         </ul>
