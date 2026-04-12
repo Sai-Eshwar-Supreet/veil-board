@@ -543,21 +543,14 @@ textarea:disabled {
 .post-detail {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: var(--space-4);
 }
 
-.post-detail__meta {
+.post-detail__author-profile{
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-2);
-
-    font-size: var(--fs-sm);
-    color: var(--color-text-muted);
-}
-
-.post-detail__author {
-    font-weight: var(--fw-medium);
-    color: var(--color-text-primary);
 }
 
 .post-detail__date {
@@ -570,17 +563,26 @@ textarea:disabled {
 
     color: var(--color-text-primary);
 
-    max-width: 65ch;
+    box-shadow: var(--shadow-inset);
+    background-color: var(--color-bg);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
 }
 
 .post-detail__content p {
     margin-bottom: var(--space-3);
     
-        white-space: pre-line;
+    white-space: pre-line;
 }
 
 .post-detail__actions {
     margin-top: var(--space-2);
+    
+    display: flex;
+    justify-content: flex-end;
+
+    gap: var(--space-2);
 }
 
 /* ==================== AUTH ==================== */

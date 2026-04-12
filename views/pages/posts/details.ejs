@@ -11,17 +11,18 @@
             heading: post.title
         }
     )%>
-
-    <!-- Meta -->
-    <div class="post-detail__meta">
-        <span class="post-detail__author">
-            <strong>@<%= post.author %></strong>
-        </span>
-        <span class="post-detail__date"> Created <%= post.createdAtRelative %> </span>
-        <% if (post.updatedAtRelative) { %>
-            <span class="post-detail__date"> Updated <%= post.updatedAtRelative %> </span>
-        <% } %>
-
+    
+    <div class="post-detail__author-profile">
+        <img class="profile__image" src="/assets/profile-placeholder.png" alt="<%= post.author %>'s profile picture" >
+        <div class="profile__info">
+            <p class="profile__name"> @<%= post.author %> </p>
+            <div class="post-creation-dates">
+                <span class="post-detail__date"> Created <%= post.createdAtRelative %> </span>
+                <% if (post.updatedAtRelative) { %>
+                    <span class="post-detail__date"> Updated <%= post.updatedAtRelative %> </span>
+                <% } %>
+            </div>
+        </div>
     </div>
 
     <!-- Content -->
