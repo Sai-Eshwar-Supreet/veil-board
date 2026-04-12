@@ -3,6 +3,8 @@ const postDB = require('../db/posts/repository.cjs');
 const permissions = require('../lib/utils/permissions.cjs');
 const {isAuthenticated} = require('../lib/middlewares/authentication.cjs');
 const { authorizePostCreation, authorizePostUpdate, authorizePostDeletion } = require('../lib/middlewares/authorization.cjs');
+const { formatPost } = require('../posts/postFormatter.cjs');
+
 
 const validatePostId = [
     param('id').toInt().isInt().withMessage('post id should be an integer')
@@ -17,27 +19,33 @@ const validatePostData = [
     .notEmpty().withMessage('Content should not be empty')
 ];
 
+function renderCreate(res, data = {}) {
+  return res.render('pages/posts/create-post', { ...data });
+}
+
+function renderEdit(res, data = {}) {
+  return res.render('pages/posts/edit-post', { ...data });
+}
+
 async function extractPostData(req,res, next){
     try{
         const errors = validationResult(req);
     
         if(!errors.isEmpty()){
-            return res.redirect('/');
+            return next(Object.assign(new Error('Invalid post ID'), {status : 400}));
         }
     
         const {id} = matchedData(req);
 
         const post = await postDB.getByPostId(id);
 
-        if(post === undefined){
-            const err = new Error('Invalid post id');
-            err.status = 400;
-            return next(err);
+        if(!post){
+            return next(Object.assign(new Error('Post not found'), { status: 404 }));
         } 
 
         req.currentPost = post;
 
-        return next();
+        next();
     }
     catch(err){
         next(err);
@@ -45,29 +53,19 @@ async function extractPostData(req,res, next){
 }
 
 async function getPost(req, res, next){
-    try{
-        const errors = validationResult(req);
-
-        if(!errors.isEmpty()){
-            return res.redirect('/');
-        }
-
-        const {id} = matchedData(req);
-
-        const post = await postDB.getByPostId(id);
-
-        const canEditPost = permissions.canUpdatePost(req.user, post.author);
-        const canDeletePost = permissions.canDeletePost(req.user, post.author);
-
-        res.render('pages/posts/post-details', {user: req.user, post, canEditPost, canDeletePost});
-    }
-    catch(err){
-        next(err);
-    }
+    const post = formatPost(req.currentPost);
+    const canEditPost = permissions.canUpdatePost(req.user, post.author);
+    const canDeletePost = permissions.canDeletePost(req.user, post.author);
+    res.render('pages/posts/post-details', 
+        {
+            post, 
+            canEditPost, 
+            canDeletePost
+        });
 }
 
 function getCreateForm(req, res, next){
-    res.render('pages/posts/create-post', {user: req.user});
+    renderCreate(res);
 }
 
 async function postCreateForm(req, res, next){
@@ -75,11 +73,14 @@ async function postCreateForm(req, res, next){
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
-            return res.status(400)
-            .render('pages/posts/create-post', {user: req.user, errors: errors.array().map(err => err.msg)});
+            return renderCreate(res, {
+                errors: errors.array().map(err => err.msg),
+                title: req.body.title,
+                content: req.body.content,
+            });
         }
 
-        const {title, content} = matchedData(req);
+        const {title, content} = matchedData(req, {locations: ['body']});
 
         await postDB.createPost(req.user.id, title, content);
         return res.redirect('/');
@@ -90,7 +91,9 @@ async function postCreateForm(req, res, next){
 }
 
 async function getEditForm(req, res){
-    res.render('pages/posts/edit-post', {user:req.user, post: req.currentPost});
+    renderEdit(res, {
+        post: req.currentPost
+    });
 }
 
 async function postEditForm(req, res, next){
@@ -98,28 +101,34 @@ async function postEditForm(req, res, next){
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
-            return res.status(400)
-            .render('pages/posts/edit-post', {user:req.user, post: post.currentPost, errors: errors.array().map(err => err.msg)});
+            return renderEdit(res, {
+                post: req.currentPost,
+                errors: errors.array().map(e => e.msg)
+            });
         }
 
         const {title, content} = matchedData(req, {locations: ['body']});
 
-        await postDB.updatePost(req.currentPost.id, title, content, new Date());
+        await postDB.updatePost(req.currentPost.id, title, content);
         
-        return res.redirect(`/posts/${req.currentPost.id}/details`);
+        res.redirect(`/posts/${req.currentPost.id}/details`);
     }
     catch(err){
-        return next(err);
+        next(err);
     }
 }
 
 async function postDelete(req, res, next){
-    await postDB.deletePost(req.currentPost.id);
-    req.currentPost = undefined;
-    res.redirect('/');
+    try{
+        await postDB.deletePost(req.currentPost.id);
+        res.redirect('/');
+    }
+    catch(err){
+        next(err);
+    }
 }
 
-module.exports.getPost = [isAuthenticated, validatePostId, getPost];
+module.exports.getPost = [isAuthenticated, validatePostId, extractPostData, getPost];
 module.exports.getCreateForm = [isAuthenticated, authorizePostCreation, getCreateForm];
 module.exports.postCreateForm = [isAuthenticated, authorizePostCreation, validatePostData, postCreateForm];
 module.exports.getEditForm = [isAuthenticated, validatePostId, extractPostData, authorizePostUpdate, getEditForm];
