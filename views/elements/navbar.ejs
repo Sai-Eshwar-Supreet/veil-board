@@ -5,15 +5,7 @@
 <nav class="navbar" aria-label="Main navigation">
   <div class="navbar__container">
 
-    <!-- Left side -->
     <ul class="navbar__list">
-      <li class="navbar__item">
-        <a href="/" class="navbar__link">Posts</a>
-      </li>
-    </ul>
-
-    <!-- Right side -->
-    <ul class="navbar__list navbar__list--right">
       <% if (user) { %>
         <li class="navbar__item">
           <a href="/profiles/<%= user.username %>" class="navbar__link">
@@ -23,17 +15,21 @@
 
         <li class="navbar__item">
           <form action="/logout" method="POST">
-            <button class="btn btn--secondary" type="submit">
-              Logout
-            </button>
+            <%- include('./button', 
+              {
+                type: 'submit',
+                variant: 'secondary',
+                label: 'Logout'
+              }
+            )%>
           </form>
         </li>
       <% } else { %>
         <li class="navbar__item">
-          <a href="/login" class="navbar__link">Login</a>
+          <a href="/login" class="btn btn--secondary">Login</a>
         </li>
         <li class="navbar__item">
-          <a href="/signup" class="navbar__link btn btn--primary">
+          <a href="/signup" class="btn btn--primary">
             Sign up
           </a>
         </li>

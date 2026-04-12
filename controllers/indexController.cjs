@@ -1,5 +1,6 @@
 const postsDB = require('../db/posts/repository.cjs');
 const { formatPosts } = require('../posts/postFormatter.cjs');
+const permissions = require('../lib/utils/permissions.cjs');
 
 async function getHome(req, res, next){
     try{
@@ -8,6 +9,7 @@ async function getHome(req, res, next){
         res.render('pages/home', 
             {
                 posts: formattedPosts,
+                canBecomeMember: permissions.canBecomeMember(req.user),
             });
     }
     catch(err){

@@ -2,17 +2,16 @@
   <div class="header__container">
 
     <!-- Logo / Brand -->
-    <div class="header__brand">
-      <a href="/" class="header__logo">
-        <%- include('../elements/heading', 
-            {
-              level: 1,
-              heading: title,
-              classNames: ['header__title']
-            }
-        )%>
-      </a>
-    </div>
+    <a href="/" class="header__brand">
+      <img src="/assets/logo.png" alt="Header logo" class="header__logo">
+      <%- include('../elements/heading', 
+          {
+            level: 1,
+            heading: title,
+            classNames: ['header__title']
+          }
+      )%>
+    </a>
 
     <!-- Navigation -->
     <%- include('../elements/navbar') %>

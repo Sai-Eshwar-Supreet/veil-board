@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS posts(
     title VARCHAR(64) NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id); 
 CREATE INDEX IF NOT EXISTS idx_posts_created_at_desc ON posts (created_at DESC);

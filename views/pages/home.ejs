@@ -1,15 +1,8 @@
 <%
-  const { user } = locals;
+  const { user, canBecomeMember } = locals;
 %>
 
 <section class="home">
-  <%- include('../elements/heading', 
-    {
-        level: 1,
-        heading: 'Veil Board'
-    }
-  )%>
-
-  <%- include(`../sections/hero-${user ? 'in' : 'out'}`) %>
+  <%- include(`../sections/hero-${user ? canBecomeMember? 'in_member' : 'in' : 'out'}`) %>
   <%- include('../sections/posts') %>
 </section>

@@ -13,7 +13,7 @@ async function postJoinMembership(req, res, next){
 
         await userDB.assignRole(id, 'member');
 
-        res.redirect('/');
+        res.redirect(`/profiles/${req.user.username}`);
     }
     catch(err){
         next(err);

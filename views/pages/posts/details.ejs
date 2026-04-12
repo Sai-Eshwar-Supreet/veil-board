@@ -38,7 +38,13 @@
 
             <% if (canDeletePost) { %>
                 <form action="/posts/<%= post.id %>/delete" method="POST" >
-                    <button class="btn btn--danger" type="submit"> Delete </button>
+                    <%- include('../../elements/button', 
+                        {
+                            type: 'submit',
+                            variant: 'danger',
+                            label: 'Delete'
+                        }
+                    )%>
                 </form>
             <% } %>
         </div>

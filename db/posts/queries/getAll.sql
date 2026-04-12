@@ -6,5 +6,6 @@ SELECT
     p.created_at AS "createdAt",
     p.updated_at AS "updatedAt"
 FROM posts AS p
-JOIN users AS u ON u.id =  p.user_id;
+JOIN users AS u ON u.id =  p.user_id
+ORDER BY p.updated_at DESC, p.created_at DESC;
 

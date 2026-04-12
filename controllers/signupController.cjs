@@ -14,7 +14,7 @@ const validator = [
     .matches(/^(?=.*[A-Z])(?=.*[\d])(?=.*[\W_])[a-zA-Z\d\W\s_]+$/).withMessage('Password must contain at least 1 uppercase letter, 1 number, and 1 special character').bail()
     .isLength({min: 8}).withMessage('Password should be at least 8 characters long'),
 
-    body('confirm-password').custom((value, {req}) => {
+    body('confirmPassword').custom((value, {req}) => {
         if(value !== req.body.password){
             throw new Error("Passwords don't match");
         }

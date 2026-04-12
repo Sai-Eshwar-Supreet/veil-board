@@ -75,7 +75,7 @@ async function postCreateForm(req, res, next){
         if(!errors.isEmpty()){
             return renderCreate(res, {
                 errors: errors.array().map(err => err.msg),
-                title: req.body.title,
+                postTitle: req.body.title,
                 content: req.body.content,
             });
         }

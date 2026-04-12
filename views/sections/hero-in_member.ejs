@@ -1,0 +1,15 @@
+<%
+  const { user } = locals;
+%>
+
+<section class="hero">
+  <div class="hero__content">
+    <p class="hero__text">
+      Have something on mind, <strong><%= user.username %></strong>?
+    </p>
+
+    <a href="/membership/join" class="btn btn--primary">
+        Become a member
+    </a>
+  </div>
+</section>

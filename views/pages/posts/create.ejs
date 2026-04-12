@@ -1,5 +1,5 @@
 <%
-  const { errors = [], title, content } = locals;
+  const { errors = [], postTitle, content } = locals;
 %>
 
 <section class="post-create">
@@ -21,8 +21,8 @@
             <%- include('../../elements/form/input', 
                 {
                     name: 'title',
-                    label: 'Title',,
-                    value: title,
+                    label: 'Title',
+                    value: postTitle,
                     required: true
                 }
             )%>
