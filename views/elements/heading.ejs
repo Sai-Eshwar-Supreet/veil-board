@@ -1,0 +1,36 @@
+<%
+  const { level: rawLevel = 2, variant, classNames = [], id, heading } = locals;
+
+  const level = Math.min(Math.max(rawLevel, 1), 6);
+
+  const variantClass = variant ? `heading--${variant}` : '';
+  const extraClasses = Array.isArray(classNames) ? classNames : [classNames];
+
+  const classes = ['heading', variantClass, ...extraClasses].filter(Boolean).join(' ');
+%>
+
+<% if (level === 1) { %>
+  <h1 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h1>
+<% } else if (level === 2) { %>
+  <h2 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h2>
+<% } else if (level === 3) { %>
+  <h3 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h3>
+<% } else if (level === 4) { %>
+  <h4 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h4>
+<% } else if (level === 5) { %>
+  <h5 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h5>
+<% } else { %>
+  <h6 class="<%= classes %>" <% if(id) {%> id="<%= id %>" <%}%>>
+    <%= heading %>
+  </h6>
+<% } %>
