@@ -1,23 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../../meta/head', {title: post.title}) %>
-    <body>
-        <%- include('../../layout/header') %>
-        <main class="content">
-            <h3><%= post.title %></h3>
-            <p><%= post.author %></p>
-            <p><%= post.createdAt.toDateString() %></p>
-            <p><%= post.updatedAt.toDateString() %></p>
-            <p><%= post.content %></p>
-            <% if(canEditPost){ %>
-                <a href=<%= `/posts/${post.id}/edit` %> >Edit</a>
+<%
+  const { post, canEditPost, canDeletePost } = locals;
+%>
+
+<section class="post-detail">
+    <!-- Title -->
+    <%- include('../../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: post.title
+        }
+    )%>
+
+    <!-- Meta -->
+    <div class="post-detail__meta">
+        <span class="post-detail__author">
+            <strong>@<%= post.author %></strong>
+        </span>
+        <span class="post-detail__date"> <%= post.relativeDate %> </span>
+
+    </div>
+
+    <!-- Content -->
+    <div class="post-detail__content">
+        <p><%= post.content %></p>
+    </div>
+
+    <!-- Actions -->
+    <% if (canEditPost || canDeletePost) { %>
+        <div class="post-detail__actions">
+            <% if (canEditPost) { %>
+                <a href="/posts/<%= post.id %>/edit" class="btn btn--secondary" >Edit</a>
             <% } %>
-            <% if(canDeletePost){ %>
-                <form action=<%= `/posts/${post.id}/delete` %> method="POST">
-                    <button type="submit" >Delete</button>
-                </form> 
+
+            <% if (canDeletePost) { %>
+                <form action="/posts/<%= post.id %>/delete" method="POST" >
+                    <button class="btn btn--danger" type="submit"> Delete </button>
+                </form>
             <% } %>
-        </main>
-        <%- include('../../layout/footer') %>
-    </body>
-</html>
+        </div>
+    <% } %>
+</section>

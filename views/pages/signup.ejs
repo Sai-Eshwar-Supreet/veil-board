@@ -1,44 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../meta/head') %>
-    <body>
-        <%- include('../layout/header') %>
-        <main class="content">
-            <%- include('../elements/errorBox') %>
-            <form action="/signup" method="POST">
-                <%- include('../elements/inputs/text-input', 
-                    {
-                        name: 'username', 
-                        label: 'Username', 
-                        required: true
-                    }
-                )%>
+<%
+  const { errors = [], username } = locals;
+%>
 
-                <%- include('../elements/inputs/password-input', 
-                    {
-                        name: 'password', 
-                        label: 'Password', 
-                        required: true
-                    }
-                )%>
+<section class="auth">
+    
+    <!-- Heading -->
+    <%- include('../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: 'Create account'
+        }
+    )%>
 
-                <%- include('../elements/inputs/password-input', 
-                    {
-                        name: 'confirm-password', 
-                        label: 'Confirm Password', 
-                        required: true
-                    }
-                )%>
-                
-                <%- include('../elements/inputs/submit-button', 
-                    {
-                        label: 'Sign Up'
-                    }
-                )%>
-                
-            </form>
-            <p>Already a member? - <a href="/login">Login</a></p>
-        </main>
-        <%- include('../layout/footer') %>
-    </body>
-</html>
+    <!-- Errors -->
+    <%- include('../elements/error-box', { errors }) %>
+
+    <!-- Form -->
+    <form class="form" action="/signup" method="POST">
+        <div class="form__group">
+            <%- include('../elements/form/input', 
+                {
+                    name: 'username',
+                    label: 'Username',
+                    value: username,
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__group">
+            <%- include('../elements/form/input', 
+                {
+                    name: 'password',
+                    type: 'password',
+                    label: 'Password',
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__group">
+            <%- include('../elements/form/input', 
+                {
+                    name: 'confirmPassword',
+                    type: 'password',
+                    label: 'Confirm password',
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__actions">
+            <%- include('../elements/button', 
+                {
+                    type: 'submit',
+                    variant: 'primary',
+                    label: 'Sign up'
+                }
+            )%>
+        </div>
+
+    </form>
+
+    <!-- Alternate -->
+    <p class="auth__alternate">
+        Already a member?
+        <a href="/login" class="auth__link">Login</a>
+    </p>
+</section>

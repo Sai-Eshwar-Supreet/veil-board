@@ -1,13 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../meta/head') %>
-    <body>
-        <%- include('../layout/header') %>
-        <main class="content">
-            <form action="/membership/join" method="POST">
-                <%- include('../elements/inputs/submit-button', {label: 'Become a member'}) %>
-            </form>
-        </main>
-        <%- include('../layout/footer') %>
-    </body>
-</html>
+<%
+  const { user } = locals;
+%>
+
+<section class="membership">
+    <!-- Heading -->
+    <%- include('../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: 'Membership'
+        }
+    )%>
+
+    <!-- Description -->
+    <p class="membership__description">
+        Become a member to unlock full access to posts and additional features.
+    </p>
+
+    <!-- Action -->
+    <form class="membership__form" action="/membership/join" method="POST">
+        <%- include('../elements/button', 
+            {
+                type: 'submit',
+                variant: 'primary',
+                label: 'Join for free'
+            }
+        )%>
+    </form>
+</section>

@@ -1,0 +1,21 @@
+<%
+  const { errMessage = 'Something went wrong.', status = 500 } = locals;
+%>
+
+<section class="error-page">
+    <%- include('../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: status === 404 ? 'Page not found' : 'Something went wrong'
+        }
+    )%>
+
+    <p class="error-page__message">
+        <%= errMessage %>
+    </p>
+
+    <div class="error-page__actions">
+        <a href="/" class="btn btn--primary"> Go home </a>
+    </div>
+</section>

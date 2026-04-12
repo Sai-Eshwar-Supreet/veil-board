@@ -1,0 +1,54 @@
+<%
+  const { errors = [], post } = locals;
+%>
+
+<section class="post-edit">
+    <!-- Heading -->
+    <%- include('../../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: 'Edit post'
+        }
+    )%>
+
+    <!-- Errors -->
+    <%- include('../../elements/error-box', { errors }) %>
+
+    <!-- Form -->
+    <form class="form" action="/posts/<%= post.id %>/edit" method="POST" >
+
+        <div class="form__group">
+            <%- include('../../elements/form/input', 
+                {
+                    name: 'title',
+                    label: 'Title',
+                    value: post.title,
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__group">
+            <%- include('../../elements/form/textarea', 
+                {
+                    name: 'content',
+                    label: 'Content',
+                    value: post.content,
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__actions">
+            <%- include('../../elements/button', 
+                {
+                    type: 'submit',
+                    variant: 'primary',
+                    label: 'Update post'
+                }
+            )%>
+        </div>
+
+    </form>
+</section>

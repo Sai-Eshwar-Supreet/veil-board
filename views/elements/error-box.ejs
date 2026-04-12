@@ -1,0 +1,15 @@
+<%
+  const { errors = [] } = locals;
+%>
+
+<% if (errors.length > 0) { %>
+  <div class="error-box">
+    <ul class="error-box__list">
+      <% errors.forEach(error => { %>
+        <li class="error-box__item">
+          <%= error %>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

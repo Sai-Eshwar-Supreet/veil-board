@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../meta/head') %>
-    <body>
-        <%- include('../layout/header') %>
-        <main class="content">
-            <%- include(`../sections/${locals.user?  'hero-section-logged-in' : 'hero-section-logged-out'}`) %>
-            <%- include('../sections/posts') %>
-        </main>
-        <%- include('../layout/footer') %>
-    </body>
-</html>
+<%
+  const { user } = locals;
+%>
+
+<section class="home">
+  <%- include('../elements/heading', 
+    {
+        level: 1,
+        heading: 'Veil Board'
+    }
+  )%>
+
+  <%- include(`../sections/hero-${user ? 'in' : 'out'}`) %>
+  <%- include('../sections/posts') %>
+</section>

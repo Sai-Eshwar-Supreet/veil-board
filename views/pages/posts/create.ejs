@@ -1,0 +1,51 @@
+<%
+  const { errors = [], title, content } = locals;
+%>
+
+<section class="post-create">
+    <!-- Heading -->
+    <%- include('../../elements/heading', 
+        {
+            level: 1,
+            variant: 'main',
+            heading: 'Create post'
+        }
+    )%>
+
+    <!-- Errors -->
+    <%- include('../../elements/error-box', { errors }) %>
+
+    <!-- Form -->
+    <form class="form" action="/posts/create" method="POST">
+        <div class="form__group">
+            <%- include('../../elements/form/input', 
+                {
+                    name: 'title',
+                    label: 'Title',
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__group">
+            <%- include('../../elements/form/textarea', 
+                {
+                    name: 'content',
+                    label: 'Content',
+                    required: true
+                }
+            )%>
+        </div>
+
+        <div class="form__actions">
+            <%- include('../../elements/button', 
+                {
+                    type: 'submit',
+                    variant: 'primary',
+                    label: 'Create post'
+                }
+            )%>
+        </div>
+
+    </form>
+</section>
