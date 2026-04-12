@@ -1,4 +1,3 @@
-const { param } = require('express-validator');
 const postsDB = require('../db/posts/repository.cjs');
 const usersDB = require('../db/users/repository.cjs');
 const { isAuthenticated } = require('../lib/middlewares/authentication.cjs');
@@ -13,6 +12,10 @@ async function getProfile(req,res, next){
     }
     
     const posts = await postsDB.getByUser(profileUser.id);
+    posts.forEach(post => {
+        post.relativeDate = getRelativeDate(post.updatedAt || post.createdAt);
+    });
+
     const ownProfile = (req.user.id === profileUser.id);
     const canCreatePost = ownProfile &&  permissions.canCreatePost(req.user);
     const canBecomeMember = ownProfile && permissions.canBecomeMember(req.user);

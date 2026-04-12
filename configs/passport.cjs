@@ -9,13 +9,13 @@ async function verifyFunction(username, password, done){
         const user =  await userDB.getUserByUsername(username);
 
         if(!user){
-            return done(null, false, {message: 'Invalid credentials'});
+            return done(null, false);
         }
 
         const match = await bcrypt.compare(password, user.passwordHash);
 
         if(!match){
-            return done(null, false, {message: 'Invalid credentials'});
+            return done(null, false);
         }
 
         return done(null, user);

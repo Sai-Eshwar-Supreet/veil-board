@@ -1,6 +1,5 @@
 const {Pool} = require('pg');
-
-const isProduction = process.env.NODE_ENV === 'production';
+const { isProduction } = require('../models/globals.cjs');
 
 const pool = new Pool({
     connectionString: process.env.DB_CONNECTION_STRING,
