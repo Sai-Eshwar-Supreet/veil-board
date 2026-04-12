@@ -1,5 +1,5 @@
 <%
-  const { profileUser, canCreatePost, canBecomeMember } = locals;
+  const { profileUser, canCreatePost } = locals;
 %>
 
 <section class="profile">
@@ -17,27 +17,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Actions -->
-    <section class="profile__actions">
-        <%- include('../elements/heading', 
-            {
-            level: 2,
-            variant: 'section',
-            heading: 'Actions'
-            }
-        )%>
-
-        <div class="profile__actions--list">
-            <% if (canCreatePost) { %>
-                <a href="/posts/create" class="btn btn--primary">New post</a>
-            <% } %>
-
-            <% if (canBecomeMember) { %>
-                <a href="/membership/join" class="btn btn--secondary">Become a member</a>
-            <% } %>
-        </div>
-    </section>
 
     <!-- Posts -->
     <%- include('../sections/posts') %>

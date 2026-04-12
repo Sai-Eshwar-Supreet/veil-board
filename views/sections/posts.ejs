@@ -1,5 +1,5 @@
 <%
-  const { posts = [], user, previewLength = 50 } = locals;
+  const { posts = [], user, canCreatePost } = locals;
 %>
 
 <section class="posts">
@@ -10,6 +10,9 @@
             heading: 'Posts'
         }
     ) %>
+    <% if (canCreatePost) { %>
+        <a href="/posts/create" class="btn btn--primary">New post</a>
+    <% } %>
 
     <% if (posts.length === 0) { %>
         <p class="posts__empty">No posts yet...</p>
@@ -17,46 +20,14 @@
     else { %>
         <ul class="posts__list">
             <% posts.forEach(post => { %>
-                <li class="post">
-                    <% if (user) { %>
-                        <a href="/posts/<%= post.id %>/details" class="post__link">
-                            <%- include('../elements/heading', 
-                                {
-                                    level: 3,
-                                    variant: 'item',
-                                    heading: post.title
-                                }
-                            )%>
-                        </a>
-                    <% } 
-                    else { %>
-                        <%- include('../elements/heading', 
-                            {
-                                level: 3,
-                                variant: 'item',
-                                heading: post.title
-                            }
-                        )%>
-                    <% } %>
-
-                    <p class="post__content">
-                        <%= post.content?.length > previewLength 
-                            ? `${post.content.slice(0, previewLength)}...` 
-                            : post.content 
-                        %>
-                    </p>
-
-                    <div class="post__meta <%= !user ? 'post__meta--restricted' : '' %>">
-                        <span class="post__author">
-                            <%= user ? post.author : 'Hidden' %>
-                        </span>
-
-                        <span class="post__date">
-                            <% const displayDate = post.updatedAtRelative || post.createdAtRelative; %>
-                            <%= user ? displayDate : '---' %>
-                        </span>
-                    </div>
-                </li>
+                <% if (user) { %>
+                    <a href="/posts/<%= post.id %>/details" class="post__link">
+                        <%- include('./post', { post}) %>
+                    </a>
+                <% } 
+                else { %>
+                    <%- include('./post', {...locals, post}) %>
+                <% } %>
             <% }) %>
         </ul>
     <% } %>

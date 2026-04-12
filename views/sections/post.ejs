@@ -1,0 +1,32 @@
+<%
+  const { user, previewLength = 100 } = locals;
+%>
+
+
+<li class="post">
+    <%- include('../elements/heading', 
+        {
+            level: 3,
+            variant: 'item',
+            heading: post.title
+        }
+    )%>
+
+    <p class="post__content">
+        <%= post.content?.length > previewLength 
+            ? `${post.content.slice(0, previewLength)}...` 
+            : post.content 
+        %>
+    </p>
+
+    <div class="post__meta <%= !user ? 'post__meta--restricted' : '' %>">
+        <span class="post__author">
+            @<%= user ? post.author : 'Hidden' %>
+        </span>
+
+        <span class="post__date">
+            <% const displayDate = post.updatedAtRelative || post.createdAtRelative; %>
+            <%= user ? displayDate : '---' %>
+        </span>
+    </div>
+</li>

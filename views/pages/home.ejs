@@ -3,6 +3,6 @@
 %>
 
 <section class="home">
-  <%- include(`../sections/hero-${user ? canBecomeMember? 'in_member' : 'in' : 'out'}`) %>
+  <%- include(`../sections/hero-${user ? canBecomeMember? 'in_basic_user' : 'in' : 'out'}`) %>
   <%- include('../sections/posts') %>
 </section>
