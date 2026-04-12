@@ -3,8 +3,8 @@ SELECT
     u.username AS username,
     u.password_hash AS "passwordHash",
     u.created_at AS "createdAt",
-    ARRAY_AGG(DISTINCT r.name) AS roles,
-    ARRAY_AGG(DISTINCT a.name) AS "authorizedActions"
+    COALESCE(ARRAY_REMOVE(ARRAY_AGG(DISTINCT r.name), NULL), '{}') AS roles,
+    COALESCE(ARRAY_REMOVE(ARRAY_AGG(DISTINCT a.name), NULL), '{}') AS "authorizedActions"
 FROM users AS u
 LEFT JOIN user_roles AS ur ON ur.user_id = u.id
 LEFT JOIN roles AS r ON r.id = ur.role_id

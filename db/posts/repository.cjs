@@ -1,5 +1,5 @@
 const buildQueries = require('../../lib/db/buildQueries.cjs');
-const pool = require('../pool.cjs');
+const query = require('../query.cjs');
 
 const queries = buildQueries(__dirname, 
     'getAll', 
@@ -11,30 +11,30 @@ const queries = buildQueries(__dirname,
 );
 
 async function getAll(){
-    const {rows} = await pool.query(queries.getAll);
+    const {rows} = await query(queries.getAll);
     return rows;
 }
 
 async function getByPostId(postId){
-    const {rows} = await pool.query(queries.getByPostId, [postId]);
+    const {rows} = await query(queries.getByPostId, [postId]);
     return rows[0];
 }
 
 async function getByUser(userId){
-    const {rows} = await pool.query(queries.getByUser, [userId]);
+    const {rows} = await query(queries.getByUser, [userId]);
     return rows;
 }
 
 async function createPost(user_id, title, content){
-    await pool.query(queries.createPost, [user_id, title, content]);
+    await query(queries.createPost, [user_id, title, content]);
 }
 
-async function updatePost(postId, title, content, updatedAt){
-    await pool.query(queries.updatePost, [postId, title, content, updatedAt]);
+async function updatePost(postId, title, content){
+    await query(queries.updatePost, [postId, title, content]);
 }
 
 async function deletePost(postId){
-    await pool.query(queries.deletePost, [postId]);
+    await query(queries.deletePost, [postId]);
 }
 
 module.exports.getAll = getAll;

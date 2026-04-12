@@ -17,9 +17,19 @@ async function main(){
     });
     
     await client.connect();
-    for(let query of Object.values(queries)){
-        await client.query(query);
+    await client.query('BEGIN');
+
+    try{
+        for(let query of Object.values(queries)){
+            await client.query(query);
+        }
+        await client.query('COMMIT');
     }
+    catch(err){
+        await client.query('ROLLBACK');
+        throw err;
+    }
+
     await client.end();
     console.log('DB initialization complete');
 }
