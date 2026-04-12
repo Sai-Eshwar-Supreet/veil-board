@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('node:path');
-const indexRouter = require('./routes/indexRouter.cjs');
 const passport = require('passport');
+const expressLayout = require('express-ejs-layouts');
+
+const indexRouter = require('./routes/indexRouter.cjs');
 const loginRouter = require('./routes/loginRouter.cjs');
 const signupRouter = require('./routes/signupRouter.cjs');
 const postsRouter = require('./routes/postsRouter.cjs');
@@ -14,6 +16,7 @@ const app = express();
 // ==================== SETUP ====================
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(expressLayout);
 
 require('./configs/passport.cjs');
 app.use(require('./configs/session.cjs'));
@@ -42,7 +45,7 @@ app.use((err, req, res, next) => {
     }
 
     console.error(err);
-    res.status(err.status || 500).render('pages/errorPage', {title: 'Error', errMessage: err.message || 'Something seems to be broken!', user: req.user});
+    res.status(err.status || 500).render('pages/error', {title: 'Error', errMessage: err.message || 'Something seems to be broken!', status: err.status, user: req.user});
 });
 
 // ==================== LISTEN TO REQUESTS ====================
