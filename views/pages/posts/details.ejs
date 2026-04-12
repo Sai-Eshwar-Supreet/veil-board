@@ -17,7 +17,10 @@
         <span class="post-detail__author">
             <strong>@<%= post.author %></strong>
         </span>
-        <span class="post-detail__date"> <%= post.relativeDate %> </span>
+        <span class="post-detail__date"> Created <%= post.createdAtRelative %> </span>
+        <% if (post.updatedAtRelative) { %>
+            <span class="post-detail__date"> Updated <%= post.updatedAtRelative %> </span>
+        <% } %>
 
     </div>
 

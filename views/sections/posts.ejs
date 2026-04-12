@@ -1,5 +1,7 @@
 <%
   const { posts = [], user, previewLength = 50 } = locals;
+
+  const displayDate = post.updatedAtRelative || post.createdAtRelative;
 %>
 
 <section class="posts">
@@ -48,11 +50,11 @@
 
                     <div class="post__meta <%= !user ? 'post__meta--restricted' : '' %>">
                         <span class="post__author">
-                            <%= user ? post.author : 'Anonymous' %>
+                            <%= user ? post.author : 'Hidden' %>
                         </span>
 
                         <span class="post__date">
-                            <%= user ? post.relativeDate : '---' %>
+                            <%= user ? displayDate : '---' %>
                         </span>
                     </div>
                 </li>

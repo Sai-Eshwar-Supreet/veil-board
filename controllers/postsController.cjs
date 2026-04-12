@@ -20,11 +20,11 @@ const validatePostData = [
 ];
 
 function renderCreate(res, data = {}) {
-  return res.render('pages/posts/create-post', { ...data });
+  return res.render('pages/posts/create', { ...data });
 }
 
 function renderEdit(res, data = {}) {
-  return res.render('pages/posts/edit-post', { ...data });
+  return res.render('pages/posts/edit', { ...data });
 }
 
 async function extractPostData(req,res, next){
@@ -56,7 +56,7 @@ async function getPost(req, res, next){
     const post = formatPost(req.currentPost);
     const canEditPost = permissions.canUpdatePost(req.user, post.author);
     const canDeletePost = permissions.canDeletePost(req.user, post.author);
-    res.render('pages/posts/post-details', 
+    res.render('pages/posts/details', 
         {
             post, 
             canEditPost, 
