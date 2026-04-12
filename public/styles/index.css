@@ -234,6 +234,8 @@ textarea::placeholder {
 
 .form__actions {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: var(--space-2);
     align-items: center;
 }
@@ -554,6 +556,7 @@ textarea:disabled {
 }
 
 .post-detail__date {
+    color: var(--color-text-muted);
     font-style: italic;
 }
 

@@ -15,11 +15,11 @@
     <div class="post-detail__author-profile">
         <img class="profile__image" src="/assets/profile-placeholder.png" alt="<%= post.author %>'s profile picture" >
         <div class="profile__info">
-            <p class="profile__name"> @<%= post.author %> </p>
+            <a class="profile__name post__link" href=<%= `/profiles/${post.author}` %> > @<%= post.author %> </a>
             <div class="post-creation-dates">
                 <span class="post-detail__date"> Created <%= post.createdAtRelative %> </span>
                 <% if (post.updatedAtRelative) { %>
-                    <span class="post-detail__date"> Updated <%= post.updatedAtRelative %> </span>
+                    <span class="post-detail__date">• Updated <%= post.updatedAtRelative %> </span>
                 <% } %>
             </div>
         </div>

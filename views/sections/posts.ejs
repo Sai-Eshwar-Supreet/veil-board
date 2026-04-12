@@ -21,7 +21,7 @@
         <ul class="posts__list">
             <% posts.forEach(post => { %>
                 <% if (user) { %>
-                    <a href="/posts/<%= post.id %>/details" class="post__link">
+                    <a href="/posts/<%= post.id %>/details">
                         <%- include('./post', { post}) %>
                     </a>
                 <% } 
